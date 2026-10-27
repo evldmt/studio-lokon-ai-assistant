@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: studio-lokon-bot
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DATABASE_URL
+        sync: false
+      - key: META_VERIFY_TOKEN
+        sync: false
+      - key: META_APP_SECRET
+        sync: false
+      - key: IG_ACCESS_TOKEN
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODELS
+        value: gemini-3.8-flash,gemini-3.7-flash,gemini-3.5-flash-lite,gemini-flash-lite-latest
+      - key: TG_BOT_TOKEN
+        sync: false
+      - key: TG_CHAT_ID
+        sync: false
+      - key: TG_ADMIN_CHAT_ID
+        sync: false
+      - key: TEMPLATE_MODE
+        value: llm_only
+      - key: HANDOFF_PAUSE_HOURS
+        value: "12"
+      - key: FOLLOWUP_DELAY_HOURS
+        value: "20"
